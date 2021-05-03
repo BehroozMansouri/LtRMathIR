@@ -157,7 +157,7 @@ def main(let_file, home_dir):
 
             dic_res_tuples = text_em.reranking_results(is_slt, is_type)
 
-            with open("../Feature_Files/tuple_" + formula_rep + '_' + str(type) + '.tsv', mode='w') as csv_file:
+            with open("../Feature_Files/tuple_" + formula_rep + '_' + str(is_type) + '.tsv', mode='w') as csv_file:
                 csv_writer = csv.writer(csv_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 for topic_id in text_em.map_query_list_formulas:
                     for formula_id in text_em.map_query_list_formulas[topic_id]:
