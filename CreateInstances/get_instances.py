@@ -30,10 +30,11 @@ def read_qrel_file(file_path):
 
 def read_result_file(result_file):
     """
+        NOTE: Based on the result file format one might change the indices
         reading qrel file into dictionary of topic id: dictionary of visual id:score
         file_path: qrel file path
         result: dictionary of topic ids: (dictionary of visual ids: scores)
-        """
+    """
     df = pd.read_csv(result_file, header=None, sep='\t')
     result = {}
     for row in df.iterrows():
@@ -62,5 +63,5 @@ def create_letor_file(let_file, read_file, is_qrel):
     file.close()
 
 
-create_letor_file("let_qrel.tsv", "qrel_v_2.tsv", True)
-# create_letor_file("let_tangent_s.tsv", "tangent_S.tsv", False)
+# create_letor_file("let_qrel.tsv", "qrel_v_2.tsv", True)
+create_letor_file("let_tangent_2020.tsv", "tangent_2020_v.tsv", False)

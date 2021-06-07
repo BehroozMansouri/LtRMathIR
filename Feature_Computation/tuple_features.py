@@ -8,8 +8,6 @@ from Feature_Computation.arqmath_topic_reader import TopicReader
 
 class TextEmbedding:
     def __init__(self, topic_file_path, letor_file, math_ml_collection, math_ml_queries, is_slt):
-        print("loading model")
-        print("reading files")
         self.topic_reader = TopicReader(topic_file_path)
         self.map_query_list_formulas = self.read_letor_file(letor_file)
         self.mathml_collection = self.__read_formula_files(math_ml_collection)
@@ -102,7 +100,6 @@ class TextEmbedding:
 
     def reranking_results(self, is_slt, is_type):
         dic_res_tuples = {}
-        print("reading files done...")
         for topic_id in self.map_query_list_formulas:
             result_map_tuple = self.__rerank_query(self.dictioney_query_id_result_trees[topic_id],
                                                    self.map_query_id_trees[topic_id], is_slt, is_type)
@@ -137,7 +134,7 @@ class TextEmbedding:
         return result_map_inverse
 
 
-def main(let_file, home_dir):
+def get_tuple_features(let_file, home_dir, feature_dir, topic_file, year):
     csv.field_size_limit(sys.maxsize)
     presentations = ["opt", "slt"]
     types = [False, True]
@@ -150,14 +147,14 @@ def main(let_file, home_dir):
             else:
                 is_slt = False
 
-            text_em = TextEmbedding("Topics_V1.1.xml", let_file,
+            text_em = TextEmbedding(topic_file, let_file,
                                     home_dir + formula_rep + "_representation_v2",
-                                    home_dir + "Formula_topics_" + formula_rep + "_V3.0.tsv",
+                                    home_dir + "Formula_topics_" + formula_rep + "_" + year + ".tsv",
                                     is_slt=is_slt)
 
             dic_res_tuples = text_em.reranking_results(is_slt, is_type)
 
-            with open("../Feature_Files/tuple_" + formula_rep + '_' + str(is_type) + '.tsv', mode='w') as csv_file:
+            with open(feature_dir + "tuple_" + formula_rep + '_' + str(is_type) + '.tsv', mode='w') as csv_file:
                 csv_writer = csv.writer(csv_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 for topic_id in text_em.map_query_list_formulas:
                     for formula_id in text_em.map_query_list_formulas[topic_id]:
@@ -167,9 +164,3 @@ def main(let_file, home_dir):
                         else:
                             print(str(topic_id) + "\t" + str(formula_id))
                             csv_writer.writerow([topic_id, formula_id, 0])
-
-
-if __name__ == '__main__':
-    let_file = "../let_all.tsv"
-    tsv_file_path = "/home/bm3302/"
-    main(let_file, tsv_file_path)
