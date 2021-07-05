@@ -12,13 +12,13 @@ def calculate_features_tangent_s(year):
 
     get_tangents_features(let_file, feature_dir, "../tangent_s_reranked/slt_" + year + "_reranked.tsv",
                           "../tangent_s_reranked/opt_" + year + "_reranked.tsv")
-    # print("tangents: done")
-    # get_tuple_features(let_file, "/home/bm3302/", feature_dir, topic_file, year)
-    # print("tuple: done")
-    # get_ted_features(let_file, "/home/bm3302/", feature_dir, topic_file, year)
-    # print("ted: done")
-    # get_cft_features(let_file, "/home/bm3302/ArqMath_Task1/TangentCFT/", feature_dir, topic_file, year)
-    # print("cft: done")
+    print("tangents: done")
+    get_tuple_features(let_file, "/home/bm3302/", feature_dir, topic_file, year)
+    print("tuple: done")
+    get_ted_features(let_file, "/home/bm3302/", feature_dir, topic_file, year)
+    print("ted: done")
+    get_cft_features(let_file, "/home/bm3302/ArqMath_Task1/TangentCFT/", feature_dir, topic_file, year)
+    print("cft: done")
 
 
 def calculate_features_qrel():
@@ -39,5 +39,5 @@ def calculate_features_qrel():
 
 
 # calculate_features_qrel()
-calculate_features_tangent_s("2020")
-# calculate_features_tangent_s("2021")
+# calculate_features_tangent_s("2020")
+calculate_features_tangent_s("2021")
